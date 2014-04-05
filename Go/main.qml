@@ -1,9 +1,7 @@
 // import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
-import QtQuick 1.1
+import QtQuick 2.3
 import amb 0.1
-import QtMobility.location 1.2
-import Qt.labs.particles 1.0
-import QtGStreamer 0.10
+import QtQuick.Particles 2.0
 
 Rectangle {
     id: container
@@ -11,14 +9,14 @@ Rectangle {
     height: 640
     color: "black"
 
-    property double heading: headingStream.value
-    property double rpmValue: rpm.value
+    //property double heading: headingStream.value
+    property double rpmValue: rpm.value ? rpm.value  : 0
 
     AutomotivePropertyItem {
         id: rpm
         propertyName: "EngineSpeed"
-        interfaceName: "org.automotive.EngineSpeed"
-        objectPath: "/org/automotive/runningstatus/EngineSpeed"
+//        interfaceName: "org.automotive.EngineSpeed"
+//        objectPath: "/org/automotive/runningstatus/EngineSpeed"
 
         Component.onCompleted: {
             rpm.connect();
@@ -28,14 +26,15 @@ Rectangle {
     AutomotivePropertyItem {
         id: velocity
         propertyName: "VehicleSpeed"
-        interfaceName: "org.automotive.VehicleSpeed"
-        objectPath: "/org/automotive/runningstatus/VehicleSpeed"
+//        interfaceName: "org.automotive.VehicleSpeed"
+//        objectPath: "/org/automotive/runningstatus/VehicleSpeed"
 
         Component.onCompleted: {
             velocity.connect();
         }
         onValueChanged: {
-            player.setText(velocity.value +"kph ");
+            console.log("velocity:", value)
+            //player.setText(velocity.value +"kph ");
         }
     }
 
@@ -75,67 +74,67 @@ t?"                                                                             
         color: "black"
         anchors.right: guageScreen.left
 
-        LandmarkModel {
-            id: gasStations
-            importFile: "../POI/california_Automotive.gpx"
-            limit: 100
-            autoUpdate: true
-            onLandmarksChanged: {
-                // Direct list access
-                for (var index = 0; index < landmarks.length; index++)  {
-                    console.log("Index, name:" + index + " , " + landmarks[index].name);
-                }
-            }
-        }
+//        LandmarkModel {
+//            id: gasStations
+//            importFile: "../POI/california_Automotive.gpx"
+//            limit: 100
+//            autoUpdate: true
+//            onLandmarksChanged: {
+//                // Direct list access
+//                for (var index = 0; index < landmarks.length; index++)  {
+//                    console.log("Index, name:" + index + " , " + landmarks[index].name);
+//                }
+//            }
+//        }
 
-        Map {
-            id: map
-            plugin: Plugin { name: "nokia" }
-            anchors.fill: parent
-            size.width: parent.width
-            size.height: parent.height
-            zoomLevel: 20
-            center: Coordinate {
+//        Map {
+//            id: map
+//            plugin: Plugin { name: "nokia" }
+//            anchors.fill: parent
+//            size.width: parent.width
+//            size.height: parent.height
+//            zoomLevel: 20
+//            center: Coordinate {
 
-                latitude: latitudeStream.value;
-                longitude: longitudeStream.value
-                Behavior on latitude {
-                    NumberAnimation { duration: 1000 }
-                }
-                Behavior on longitude {
-                    NumberAnimation { duration: 1000 }
-                }
-            }
+//                latitude: latitudeStream.value;
+//                longitude: longitudeStream.value
+//                Behavior on latitude {
+//                    NumberAnimation { duration: 1000 }
+//                }
+//                Behavior on longitude {
+//                    NumberAnimation { duration: 1000 }
+//                }
+//            }
 
-            MapCircle {
-                id: myPositionMarker
-                color: "blue"
-                radius: 2
-                center: Coordinate {
+//            MapCircle {
+//                id: myPositionMarker
+//                color: "blue"
+//                radius: 2
+//                center: Coordinate {
 
-                    latitude: latitudeStream.value;
-                    longitude: longitudeStream.value
-                    Behavior on latitude {
-                        NumberAnimation { duration: 1000 }
-                    }
-                    Behavior on longitude {
-                        NumberAnimation { duration: 1000 }
-                    }
-                }
-            }
+//                    latitude: latitudeStream.value;
+//                    longitude: longitudeStream.value
+//                    Behavior on latitude {
+//                        NumberAnimation { duration: 1000 }
+//                    }
+//                    Behavior on longitude {
+//                        NumberAnimation { duration: 1000 }
+//                    }
+//                }
+//            }
 
-            MapObjectView {
-                model: gasStations
-                delegate: MapCircle {
-                    radius: landmark.radius
-                    color: "orange"
-                    center: landmark.coordinate
-                    Component.onCompleted: {
-                        console.log("Drawing map circle for "+landmark.name)
-                    }
-                }
-            }
-        }
+//            MapObjectView {
+//                model: gasStations
+//                delegate: MapCircle {
+//                    radius: landmark.radius
+//                    color: "orange"
+//                    center: landmark.coordinate
+//                    Component.onCompleted: {
+//                        console.log("Drawing map circle for "+landmark.name)
+//                    }
+//                }
+//            }
+//        }
 
         Text {
             anchors.horizontalCenter: parent.horizontalCenter
@@ -189,31 +188,31 @@ t?"                                                                             
             NumberAnimation { duration: 500 }
         }
 
-        Particles {
-            y: 0
-            width: parent.width
-            height: parent.height
-            source: "assets/star.png"
-            lifeSpan: 15000
-            count: 300 * (velocity.value / 250)
-            angle: heading
-            angleDeviation: 36
-            velocity: 100 * (rpmValue / 10000)
-            velocityDeviation: 10
-            ParticleMotionWander {
-                xvariance: 30
-                pace: 100
-            }
-        }
+//        Particles {
+//            y: 0
+//            width: parent.width
+//            height: parent.height
+//            source: "assets/star.png"
+//            lifeSpan: 15000
+//            count: 300 * (velocity.value / 250)
+//            angle: heading
+//            angleDeviation: 36
+//            velocity: 100 * (rpmValue / 10000)
+//            velocityDeviation: 10
+//            ParticleMotionWander {
+//                xvariance: 30
+//                pace: 100
+//            }
+//        }
 
         Guage {
             anchors.centerIn: parent
-            rpm: rpm
-            engineCoolant: engineCoolant
-            velocity: velocity
+            rpm: rpm.value ? rpm.value : 0
+            engineCoolant: 0
+            velocity: velocity.value ? velocity.value : 0
         }
 
-        /*Image {
+        Image {
             id: mainGaugeBackground
             source: "assets/dial-main-bg.png"
 
@@ -222,7 +221,7 @@ t?"                                                                             
 
             Rectangle {
                 id: rpmNeedle
-                visible: rpm.supported
+                //visible: rpm.supported
                 width: 15
                 height: parent.height / 2 - 10
                 radius: 10
@@ -245,7 +244,7 @@ t?"                                                                             
             Rectangle {
                 id: coolantNeedle
                 width: 7
-                visible: engineCoolant.supported
+                //visible: engineCoolant.supported
                 height: parent.height / 2
                 radius: 10
                 x: parent.width / 2
@@ -254,7 +253,7 @@ t?"                                                                             
                 transform: Rotation {
                     origin.x: coolantNeedle.width / 2
                     origin.y: 0
-                    angle: engineCoolant.value > 165 ? (165/280 * 70 + 90):(engineCoolant.value / 180 * 70) + 90
+                    //angle: engineCoolant > 165 ? (165/280 * 70 + 90):(engineCoolant / 180 * 70) + 90
 
                     Behavior on angle {
                         //NumberAnimation { duration: 500 }
@@ -317,7 +316,7 @@ t?"                                                                             
                 anchors.centerIn: parent
                 color: "white"
             }
-        }*/
+        }
 
 
         Button {
@@ -395,11 +394,11 @@ t?"                                                                             
         color: "blue"
         anchors.left: guageScreen.right
 
-        VideoItem {
-            id: video
-            anchors.fill: parent
-            surface: videoSurface1
-        }
+//        VideoItem {
+//            id: video
+//            anchors.fill: parent
+//            surface: videoSurface1
+//        }
 
         Button {
             id: gaugeButton
@@ -521,15 +520,15 @@ t?"                                                                             
                     color: "white"
                 }
 
-                TextEntry {
-                    id: videoDevice
-                    text: player.videoDevice
-                    height: 50
-                    width: 50
-                    onAccepted: {
-                        player.setVideoDevice(videoDevice.text)
-                    }
-                }
+//                TextEntry {
+//                    id: videoDevice
+//                    text: player.videoDevice
+//                    height: 50
+//                    width: 50
+//                    onAccepted: {
+//                        player.setVideoDevice(videoDevice.text)
+//                    }
+//                }
             }
         }
     }

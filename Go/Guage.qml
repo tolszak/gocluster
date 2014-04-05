@@ -1,4 +1,4 @@
-import QtQuick 1.1
+import QtQuick 2.3
 
 Item {
     width: 800
@@ -18,7 +18,7 @@ Item {
 
         Rectangle {
             id: rpmNeedle
-            visible: rpm.supported
+            //visible: rpm.supported
             width: 0.05 * parent.height
             height: parent.height / 2 - 10
             radius: 10
@@ -41,7 +41,7 @@ Item {
         Rectangle {
             id: coolantNeedle
             width: 0.01 * parent.height
-            visible: engineCoolant.supported
+            //visible: engineCoolant.supported
             height: parent.height / 2 - 10
             radius: 10
             x: parent.width / 2

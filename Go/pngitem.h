@@ -1,16 +1,16 @@
 #ifndef PNGITEM_H
 #define PNGITEM_H
 
-#include <QDeclarativeItem>
+#include <QQuickItem>
 #include <QImage>
 #include <QProcess>
 #include <QTimer>
 
-class PngItem : public QDeclarativeItem
+class PngItem : public QQuickItem
 {
 	Q_OBJECT
 public:
-	explicit PngItem(QDeclarativeItem *parent = 0);
+    explicit PngItem(QQuickItem *parent = 0);
 
 	void paint(QPainter *, const QStyleOptionGraphicsItem *, QWidget *);
 	

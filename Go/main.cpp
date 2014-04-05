@@ -16,40 +16,33 @@
 *   If not, see <http://www.gnu.org/licenses/>.                           *
 ***************************************************************************/
 
-#include <QtGui/QApplication>
+#include <QtGui/QGuiApplication>
 #include <QNetworkProxyFactory>
 
-#include <QDeclarativeView>
-#include <QDeclarativeContext>
-#include <QGst/Ui/GraphicsVideoSurface>
-#include <QGst/Init>
-#include <QGLWidget>
-#include <QtDeclarative>
-
-#include "gstvideoplayer.h"
-#include "pngitem.h"
+#include <QQuickView>
+#include <QQmlContext>
 
 Q_DECL_EXPORT int main(int argc, char *argv[])
 {
-	QApplication app(argc,argv);
-	QGst::init(&argc, &argv);
+    QGuiApplication app(argc,argv);
+//	QGst::init(&argc, &argv);
 
 	QNetworkProxyFactory::setUseSystemConfiguration(true);
 
-	QDeclarativeView viewer;
+    QQuickView viewer;
 
-	if(app.arguments().contains("opengl"))
-		viewer.setViewport(new QGLWidget);
+//	if(app.arguments().contains("opengl"))
+//		viewer.setViewport(new QGLWidget);
 
-	QGst::Ui::GraphicsVideoSurface *surface = new QGst::Ui::GraphicsVideoSurface(&viewer);
+    //QGst::Ui::GraphicsVideoSurface *surface = new QGst::Ui::GraphicsVideoSurface(&viewer);
 
-	viewer.rootContext()->setContextProperty(QLatin1String("videoSurface1"), surface);
+    //viewer.rootContext()->setContextProperty(QLatin1String("videoSurface1"), surface);
 
-	GstVideoPlayer *player = new GstVideoPlayer(&viewer);
-	player->setVideoSink(surface->videoSink());
-	viewer.rootContext()->setContextProperty(QLatin1String("player"), player);
+    //GstVideoPlayer *player = new GstVideoPlayer(&viewer);
+    //player->setVideoSink(surface->videoSink());
+    //viewer.rootContext()->setContextProperty(QLatin1String("player"), player);
 
-	qmlRegisterType<PngItem>("go",0,1,"VideoRecordItem");
+    //qmlRegisterType<PngItem>("go",0,1,"VideoRecordItem");
 
 	if(app.arguments().contains("light"))
 	{

@@ -1,8 +1,7 @@
 
-QT += network quick qml declarative opengl
+QT += network quick qml quick opengl
 CONFIG += qt plugin link_pkgconfig debug
 
-PKGCONFIG += QtGStreamer-0.10 QtGStreamerUi-0.10 QtGLib-2.0 QtGStreamerUtils-0.10
 
 SOURCES += main.cpp \
     gstvideoplayer.cpp \
@@ -12,9 +11,7 @@ OTHER_FILES += assets/* *.qml \
     TextEntry.qml \
     Guage.qml \
     golight.qml \
-	gorecord.qml \
+    gorecord.qml \
     Map.qml
 
-HEADERS += \
-    gstvideoplayer.h \
-    pngitem.h
+HEADERS +=    pngitem.h

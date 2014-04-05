@@ -1,5 +1,5 @@
-import QtQuick 1.1
-import nobdy 0.1
+import QtQuick 2.3
+//import nobdy 0.1
 
 Rectangle {
     id: container
@@ -8,10 +8,10 @@ Rectangle {
     color: "black"
     radius: 10
     border.color: "#e2e1e1"
-    NobdyStream {
-        id: troubleCodeStream
-        request: VehicleData.DiagnosticTroubleCodes
-    }
+//    NobdyStream {
+//        id: troubleCodeStream
+//        request: VehicleData.DiagnosticTroubleCodes
+//    }
 
     Column {
         width: parent.width
